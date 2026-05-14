@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - Zenera</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8edf2 100%);
+            min-height: 100vh;
+            padding: 40px;
+        }
+        .payment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo i { font-size: 2.5rem; color: #2d5a27; }
+        h2 { margin-bottom: 20px; }
+        .resumo-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .total {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-top: 2px solid #333;
+            margin-top: 20px;
+        }
+        .total strong { color: #2d5a27; }
+        .input-group { margin-bottom: 15px; }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        .btn-pagar {
+            width: 100%;
+            background: #2d5a27;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-pagar:hover { background: #1e3d1a; }
+        .back-home {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <a href="/" class="back-home">← Voltar</a>
+        <div class="logo">
+            <i class="fa-solid fa-leaf"></i>
+            <h2>Finalizar Compra</h2>
+        </div>
+        
+        <div id="resumo"></div>
+        <div class="total" id="total"></div>
+        
+        <h3>Endereço de Entrega</h3>
+        <div class="input-group">
+            <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" required>
+        </div>
+        
+        <button class="btn-pagar" onclick="finalizar()">Confirmar Pagamento</button>
+    </div>
+
+    <script>
+        let carrinho = [];
+        let total = 0;
+        
+        function carregarCarrinho() {
+            const salvo = localStorage.getItem('carrinhoZenera');
+            if (salvo) {
+                carrinho = JSON.parse(salvo);
+                total = carrinho.reduce((acc, item) => acc + item.price, 0);
+                
+                const resumoDiv = document.getElementById('resumo');
+                resumoDiv.innerHTML = carrinho.map(item => `
+                    <div class="resumo-item">
+                        <span>${item.name}</span>
+                        <strong>R$ ${item.price.toLocaleString('pt-BR')}</strong>
+                    </div>
+                `).join('');
+                
+                document.getElementById('total').innerHTML = `<span>Total:</span> <strong>R$ ${total.toLocaleString('pt-BR')}</strong>`;
+            }
+        }
+        
+        async function finalizar() {
+            const endereco = document.getElementById('endereco').value;
+            if (!endereco) {
+                alert('Preencha o endereço de entrega!');
+                return;
+            }
+            
+            const usuarioSalvo = localStorage.getItem('usuarioZenera');
+            if (!usuarioSalvo) {
+                alert('Faça login primeiro!');
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/pagamento', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ metodo: 'simples', endereco, total })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.removeItem('carrinhoZenera');
+                    alert('Pagamento aprovado! Obrigado pela compra!');
+                    window.location.href = '/';
+                } else {
+                    alert('Erro no pagamento');
+                }
+            } catch (error) {
+                alert('Erro ao processar pagamento');
+            }
+        }
+        
+        carregarCarrinho();
+    </script>
+</body>
+</html>

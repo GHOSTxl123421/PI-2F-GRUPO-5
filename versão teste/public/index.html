@@ -7,7 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -25,9 +24,17 @@
                 <li><a href="#loja">Loja</a></li>
             </ul>
         </nav>
-        <div class="cart-trigger" onclick="toggleCart()">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-count">0</span>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="user-menu">
+                <a href="#" id="login-link" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Entrar</span>
+                </a>
+            </div>
+            <div class="cart-trigger" onclick="toggleCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
         </div>
     </header>
 
@@ -37,7 +44,7 @@
             <i class="fa-solid fa-xmark" style="cursor:pointer; font-size: 1.5rem;" onclick="toggleCart()"></i>
         </div>
         <div id="cart-items">
-            <div class="cart-empty"> Seu carrinho está vazio</div>
+            <div class="cart-empty">🛒 Seu carrinho está vazio</div>
         </div>
         <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
         <button class="btn btn-green" style="width: 100%;" onclick="finalizarPedido()">
@@ -58,7 +65,6 @@
             </div>
         </section>
 
-        <!-- DASHBOARD DE SENSORES -->
         <section id="dashboard">
             <div class="section-title reveal">
                 <span>MONITORAMENTO EM TEMPO REAL</span>
@@ -68,7 +74,7 @@
             
             <div class="dashboard-grid">
                 <div class="sensor-card">
-                    <div class="sensor-icon"></div>
+                    <div class="sensor-icon">🌡️</div>
                     <h3>Temperatura</h3>
                     <div class="sensor-value" id="temp-value">--</div>
                     <div class="sensor-unit">°C</div>
@@ -76,7 +82,7 @@
                 </div>
                 
                 <div class="sensor-card">
-                    <div class="sensor-icon"></div>
+                    <div class="sensor-icon">⏲️</div>
                     <h3>Pressão</h3>
                     <div class="sensor-value" id="press-value">--</div>
                     <div class="sensor-unit">bar</div>
@@ -84,7 +90,7 @@
                 </div>
                 
                 <div class="sensor-card">
-                    <div class="sensor-icon"></div>
+                    <div class="sensor-icon">🧪</div>
                     <h3>pH do Efluente</h3>
                     <div class="sensor-value" id="ph-value">--</div>
                     <div class="sensor-unit">pH</div>
@@ -92,15 +98,15 @@
                 </div>
                 
                 <div class="sensor-card">
-                    <div class="sensor-icon"></div>
+                    <div class="sensor-icon">🔥</div>
                     <h3>Produção de Gás</h3>
                     <div class="sensor-value" id="producao-value">--</div>
                     <div class="sensor-unit">m³/dia</div>
                     <div class="sensor-status" id="producao-status"></div>
                 </div>
                 
-                <div class="sensor-card"
-                    <div class="sensor-icon"></div>
+                <div class="sensor-card">
+                    <div class="sensor-icon">💨</div>
                     <h3>Qualidade do Metano</h3>
                     <div class="sensor-value" id="metano-value">--</div>
                     <div class="sensor-unit">% CH₄</div>
@@ -108,7 +114,7 @@
                 </div>
                 
                 <div class="sensor-card">
-                    <div class="sensor-icon"></div>
+                    <div class="sensor-icon">🕒</div>
                     <h3>Última Leitura</h3>
                     <div class="sensor-value" id="update-time" style="font-size: 0.9rem;">--</div>
                     <button id="simular-btn" class="btn-small">
@@ -158,10 +164,10 @@
                 <p>O design mais premiado do mercado, agora disponível para sua residência com monitoramento IoT.</p>
                 <div class="product-price">R$ 4.990,00</div>
                 <div class="specs-list">
-                    <div><strong> Capacidade:</strong> 2kg de resíduos/dia</div>
-                    <div><strong> Produção:</strong> 700L biogás/dia</div>
-                    <div><strong> Monitoramento:</strong> Web</div>
-                    <div><strong> Economia:</strong> ~R$150/mês</div>
+                    <div><strong>📦 Capacidade:</strong> 2kg de resíduos/dia</div>
+                    <div><strong>🔥 Produção:</strong> 700L biogás/dia</div>
+                    <div><strong>📡 Monitoramento:</strong> Web</div>
+                    <div><strong>♻️ Economia:</strong> ~R$150/mês</div>
                 </div>
                 <button class="btn btn-green btn-large" onclick="addToCart('Biodigestor Zenera 2.0', 4990)">
                     <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
@@ -169,16 +175,13 @@
             </div>
         </section>
 
-        <!-- LOJA DE SENSORES E ACESSÓRIOS -->
         <section id="loja">
             <div class="section-title reveal">
                 <span>ECOMMERCE</span>
                 <h2>Sensores e Acessórios</h2>
                 <p>Expanda seu sistema com nossos componentes</p>
             </div>
-            <div class="produtos-grid" id="produtos-container">
-                <!-- Produtos serão carregados via JavaScript -->
-            </div>
+            <div class="produtos-grid" id="produtos-container"></div>
         </section>
 
         <section id="sobre">
@@ -220,6 +223,254 @@
         </div>
     </footer>
 
-    <script src="/js/main.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script>
+        // ========== HEADER SCROLL ==========
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // ========== CARRINHO ==========
+        let cart = [];
+        const cartDrawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotalContainer = document.getElementById('cart-total');
+
+        function toggleCart() {
+            cartDrawer.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        if (overlay) overlay.addEventListener('click', toggleCart);
+
+        function addToCart(name, price) {
+            cart.push({ name, price, id: Date.now() });
+            updateCartUI();
+            if (!cartDrawer.classList.contains('active')) toggleCart();
+            showNotification(`${name} adicionado ao carrinho!`);
+            salvarCarrinho();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            salvarCarrinho();
+        }
+
+        function updateCartUI() {
+            cartCount.innerText = cart.length;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="cart-empty">🛒 Seu carrinho está vazio</div>';
+                cartTotalContainer.innerText = 'Total: R$ 0,00';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div>
+                        <div style="font-weight:600">${item.name}</div>
+                        <div style="font-size:0.85rem; color:var(--green-primary)">R$ ${item.price.toLocaleString('pt-BR')}</div>
+                    </div>
+                    <i class="fa-solid fa-trash-can" style="color:#ff4d4d; cursor:pointer" onclick="removeFromCart(${index})"></i>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((acc, item) => acc + item.price, 0);
+            cartTotalContainer.innerText = `Total: R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+        }
+
+        function salvarCarrinho() {
+            localStorage.setItem('carrinhoZenera', JSON.stringify(cart));
+        }
+
+        function carregarCarrinhoSalvo() {
+            const salvo = localStorage.getItem('carrinhoZenera');
+            if (salvo) {
+                cart = JSON.parse(salvo);
+                updateCartUI();
+            }
+        }
+
+        function finalizarPedido() {
+            if (cart.length === 0) {
+                showNotification('Seu carrinho está vazio!', 'error');
+                return;
+            }
+            
+            const usuarioSalvo = localStorage.getItem('usuarioZenera');
+            
+            if (!usuarioSalvo) {
+                showNotification('Faça login para finalizar a compra!', 'error');
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 1500);
+                return;
+            }
+            
+            localStorage.setItem('carrinhoZenera', JSON.stringify(cart));
+            window.location.href = '/pagamento.html';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#2d5a27' : '#ef4444'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 10px;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== VERIFICAR USUÁRIO LOGADO ==========
+        function verificarUsuarioLogado() {
+            const loginLink = document.getElementById('login-link');
+            if (!loginLink) return;
+            
+            const usuarioSalvo = localStorage.getItem('usuarioZenera');
+            
+            if (usuarioSalvo) {
+                const usuario = JSON.parse(usuarioSalvo);
+                loginLink.innerHTML = `<i class="fa-solid fa-user-check"></i> ${usuario.nome.split(' ')[0]}`;
+                loginLink.href = '#';
+                
+                loginLink.onclick = (e) => {
+                    e.preventDefault();
+                    if (confirm('Deseja sair da sua conta?')) {
+                        localStorage.removeItem('usuarioZenera');
+                        window.location.href = '/';
+                    }
+                };
+            } else {
+                loginLink.innerHTML = `<i class="fa-solid fa-user"></i> Entrar`;
+                loginLink.href = '/login.html';
+            }
+        }
+
+        // ========== SENSORES ==========
+        const socket = io();
+
+        function updateDashboard(data) {
+            const elements = {
+                temp: document.getElementById('temp-value'),
+                press: document.getElementById('press-value'),
+                ph: document.getElementById('ph-value'),
+                producao: document.getElementById('producao-value'),
+                metano: document.getElementById('metano-value'),
+                updateTime: document.getElementById('update-time')
+            };
+            
+            if (elements.temp) elements.temp.innerHTML = data.temperatura?.toFixed(1) || '--';
+            if (elements.press) elements.press.innerHTML = data.pressao?.toFixed(2) || '--';
+            if (elements.ph) elements.ph.innerHTML = data.ph?.toFixed(1) || '--';
+            if (elements.producao) elements.producao.innerHTML = data.producao_gas?.toFixed(2) || '--';
+            if (elements.metano) elements.metano.innerHTML = data.qualidade_metano?.toFixed(0) || '--';
+            
+            if (elements.updateTime && data.ultima_atualizacao) {
+                elements.updateTime.innerHTML = new Date(data.ultima_atualizacao).toLocaleString('pt-BR');
+            }
+        }
+
+        if (socket) {
+            socket.on('sensores-update', (data) => {
+                updateDashboard(data);
+            });
+        }
+
+        fetch('/api/sensores')
+            .then(res => res.json())
+            .then(data => updateDashboard(data))
+            .catch(err => console.log('Backend não disponível'));
+
+        const simularBtn = document.getElementById('simular-btn');
+        if (simularBtn) {
+            simularBtn.addEventListener('click', () => {
+                fetch('/api/arduino/simular')
+                    .then(() => showNotification('Dados simulados!', 'success'))
+                    .catch(() => showNotification('Erro', 'error'));
+            });
+        }
+
+        // ========== PRODUTOS ==========
+        function loadProducts() {
+            fetch('/api/produtos')
+                .then(res => res.json())
+                .then(products => {
+                    const container = document.getElementById('produtos-container');
+                    if (!container) return;
+                    
+                    container.innerHTML = products.map(prod => `
+                        <div class="produto-card reveal">
+                            <i class="fa-solid fa-box" style="font-size: 2.5rem; color: var(--green-primary);"></i>
+                            <h3>${prod.name}</h3>
+                            <p class="produto-desc">${prod.description}</p>
+                            <div class="produto-preco">R$ ${prod.price.toLocaleString('pt-BR')}</div>
+                            <button class="btn btn-green" onclick="addToCart('${prod.name}', ${prod.price})">
+                                <i class="fa-solid fa-cart-plus"></i> Comprar
+                            </button>
+                        </div>
+                    `).join('');
+                })
+                .catch(err => console.log('Erro:', err));
+        }
+
+        // ========== CONTATO ==========
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showNotification('Mensagem enviada!', 'success');
+                contactForm.reset();
+            });
+        }
+
+        // ========== ANIMAÇÃO ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ========== INICIAR ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarCarrinhoSalvo();
+            loadProducts();
+            verificarUsuarioLogado();
+            console.log('Site carregado!');
+        });
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        .sensor-icon { font-size: 2rem; }
+    </style>
+
 </body>
 </html>

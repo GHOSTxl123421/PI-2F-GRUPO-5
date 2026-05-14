@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Zenera</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2d5a27 0%, #1e3d1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo i { font-size: 3rem; color: #2d5a27; }
+        .logo h2 { margin-top: 10px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+        }
+        .input-group input:focus { border-color: #2d5a27; }
+        .btn-login {
+            width: 100%;
+            background: #2d5a27;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-login:hover { background: #1e3d1a; }
+        .demo-info {
+            margin-top: 25px;
+            padding: 15px;
+            background: #e8f3e7;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .error {
+            background: #fee2e2;
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+        .back-home:hover { color: #2d5a27; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo">
+            <i class="fa-solid fa-leaf"></i>
+            <h2>Zenera</h2>
+            <p style="color: #666; font-size: 0.8rem;">Faça login para continuar</p>
+        </div>
+        
+        <div id="error-message" class="error"></div>
+        
+        <form id="login-form">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="senha" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+        
+        <div class="demo-info">
+            <p><strong> Contas demo:</strong></p>
+            <p>joao@email.com / 123456</p>
+            <p>maria@email.com / 123456</p>
+        </div>
+        
+        <a href="/" class="back-home">← Voltar para o site</a>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const errorDiv = document.getElementById('error-message');
+            
+            errorDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem('usuarioZenera', JSON.stringify(data.usuario));
+                    window.location.href = '/';
+                } else {
+                    errorDiv.textContent = data.message || 'Email ou senha incorretos';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Erro ao conectar com o servidor. Certifique-se que o servidor está rodando.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
