@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenera - Biodigestor Inteligente</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+    <header id="main-header">
+        <a href="#" class="logo"><i class="fa-solid fa-leaf"></i> ZENERA</a>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#solucoes">Benefícios</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#loja">Loja</a></li>
+            </ul>
+        </nav>
+        <div class="cart-trigger" onclick="toggleCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Seu Carrinho</h3>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size: 1.5rem;" onclick="toggleCart()"></i>
+        </div>
+        <div id="cart-items">
+            <div class="cart-empty"> Seu carrinho está vazio</div>
+        </div>
+        <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
+        <button class="btn btn-green" style="width: 100%;" onclick="finalizarPedido()">
+            <i class="fa-solid fa-check"></i> Finalizar Compra
+        </button>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content reveal">
+                <span>ENERGIA QUE VEM DA NATUREZA</span>
+                <h1>O Futuro é<br>Orgânico.</h1>
+                <p>A tecnologia Home Biogás aplicada ao seu dia a dia. Transforme restos de alimentos em gás limpo de forma minimalista e eficiente.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-green" onclick="addToCart('Biodigestor Zenera 2.0', 4990)">Comprar Agora</button>
+                    <button class="btn btn-outline" onclick="toggleCart()">Ver Carrinho</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD DE SENSORES -->
+        <section id="dashboard">
+            <div class="section-title reveal">
+                <span>MONITORAMENTO EM TEMPO REAL</span>
+                <h2>Seu Biodigestor Inteligente</h2>
+                <p>Dados atualizados automaticamente via Arduino</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="sensor-card">
+                    <div class="sensor-icon"></div>
+                    <h3>Temperatura</h3>
+                    <div class="sensor-value" id="temp-value">--</div>
+                    <div class="sensor-unit">°C</div>
+                    <div class="sensor-status" id="temp-status"></div>
+                </div>
+                
+                <div class="sensor-card">
+                    <div class="sensor-icon"></div>
+                    <h3>Pressão</h3>
+                    <div class="sensor-value" id="press-value">--</div>
+                    <div class="sensor-unit">bar</div>
+                    <div class="sensor-status" id="press-status"></div>
+                </div>
+                
+                <div class="sensor-card">
+                    <div class="sensor-icon"></div>
+                    <h3>pH do Efluente</h3>
+                    <div class="sensor-value" id="ph-value">--</div>
+                    <div class="sensor-unit">pH</div>
+                    <div class="sensor-status" id="ph-status"></div>
+                </div>
+                
+                <div class="sensor-card">
+                    <div class="sensor-icon"></div>
+                    <h3>Produção de Gás</h3>
+                    <div class="sensor-value" id="producao-value">--</div>
+                    <div class="sensor-unit">m³/dia</div>
+                    <div class="sensor-status" id="producao-status"></div>
+                </div>
+                
+                <div class="sensor-card"
+                    <div class="sensor-icon"></div>
+                    <h3>Qualidade do Metano</h3>
+                    <div class="sensor-value" id="metano-value">--</div>
+                    <div class="sensor-unit">% CH₄</div>
+                    <div class="sensor-status" id="metano-status"></div>
+                </div>
+                
+                <div class="sensor-card">
+                    <div class="sensor-icon"></div>
+                    <h3>Última Leitura</h3>
+                    <div class="sensor-value" id="update-time" style="font-size: 0.9rem;">--</div>
+                    <button id="simular-btn" class="btn-small">
+                        <i class="fa-solid fa-microchip"></i> Simular Dados
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="solucoes">
+            <div class="section-title reveal">
+                <span>BENEFÍCIOS</span>
+                <h2>Simplicidade em cada ciclo</h2>
+            </div>
+            <div class="features">
+                <div class="f-item reveal">
+                    <i class="fa-solid fa-microchip"></i>
+                    <h3>Sistema Inteligente</h3>
+                    <p>Sensores auxiliam no monitoramento e controle do processo em tempo real.</p>
+                </div>
+                <div class="f-item reveal">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                    <h3>Gás Grátis</h3>
+                    <p>Produza até 1 hora de gás de cozinha por dia com seus resíduos orgânicos.</p>
+                </div>
+                <div class="f-item reveal">
+                    <i class="fa-solid fa-seedling"></i>
+                    <h3>Adubo Líquido</h3>
+                    <p>O subproduto é um fertilizante orgânico potente para suas plantas.</p>
+                </div>
+                <div class="f-item reveal">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>Economia Real</h3>
+                    <p>Redução de até 70% na conta de gás e tratamento de resíduos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="produtos">
+            <div class="section-title reveal">
+                <span>SISTEMA PRINCIPAL</span>
+                <h2>Biodigestor Zenera 2.0</h2>
+            </div>
+            <div class="product-box reveal">
+                <div class="product-badge">Mais Vendido</div>
+                <h3>O Biodigestor Inteligente</h3>
+                <p>O design mais premiado do mercado, agora disponível para sua residência com monitoramento IoT.</p>
+                <div class="product-price">R$ 4.990,00</div>
+                <div class="specs-list">
+                    <div><strong> Capacidade:</strong> 2kg de resíduos/dia</div>
+                    <div><strong> Produção:</strong> 700L biogás/dia</div>
+                    <div><strong> Monitoramento:</strong> Web</div>
+                    <div><strong> Economia:</strong> ~R$150/mês</div>
+                </div>
+                <button class="btn btn-green btn-large" onclick="addToCart('Biodigestor Zenera 2.0', 4990)">
+                    <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                </button>
+            </div>
+        </section>
+
+        <!-- LOJA DE SENSORES E ACESSÓRIOS -->
+        <section id="loja">
+            <div class="section-title reveal">
+                <span>ECOMMERCE</span>
+                <h2>Sensores e Acessórios</h2>
+                <p>Expanda seu sistema com nossos componentes</p>
+            </div>
+            <div class="produtos-grid" id="produtos-container">
+                <!-- Produtos serão carregados via JavaScript -->
+            </div>
+        </section>
+
+        <section id="sobre">
+            <div class="section-title reveal">
+                <span>NOSSA JORNADA</span>
+                <h2>Movidos pela inovação</h2>
+            </div>
+            <div class="about-text reveal">
+                <p>A Zenera começou com um propósito simples: eliminar o conceito de "lixo". Acreditamos que tudo na natureza se transforma, e nossos sistemas são a ponte para que essa transformação ocorra no seu quintal.</p>
+                <p>Nossa engenharia foca no minimalismo. Menos peças, mais durabilidade. Queremos que a sustentabilidade seja um prazer, não uma tarefa difícil. Hoje, ajudamos milhares de famílias a reduzirem sua pegada de carbono enquanto economizam gás de cozinha.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato">
+        <div class="footer-grid">
+            <div class="reveal">
+                <h2 style="margin-bottom: 20px;">Zenera</h2>
+                <p style="color: var(--text-light); margin-bottom: 30px;">Tecnologia para um futuro mais sustentável.</p>
+                <div style="margin-bottom: 10px;"><i class="fa-solid fa-envelope" style="color: var(--green-primary); margin-right: 10px;"></i> contato@zenera.com.br</div>
+                <div><i class="fa-solid fa-phone" style="color: var(--green-primary); margin-right: 10px;"></i> (11) 98765-4321</div>
+                <div style="margin-top: 20px;">
+                    <i class="fa-brands fa-instagram" style="font-size: 1.5rem; margin-right: 15px; cursor: pointer;"></i>
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.5rem; margin-right: 15px; cursor: pointer;"></i>
+                    <i class="fa-brands fa-youtube" style="font-size: 1.5rem; cursor: pointer;"></i>
+                </div>
+            </div>
+            <div class="reveal">
+                <form id="contact-form" class="contact-form">
+                    <input type="text" placeholder="Seu Nome" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <textarea placeholder="Como podemos ajudar?" rows="4"></textarea>
+                    <button type="submit" class="btn btn-green" style="width: 100%;">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 ZENERA SOLUÇÕES AMBIENTAIS. TODOS OS DIREITOS RESERVADOS.
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
