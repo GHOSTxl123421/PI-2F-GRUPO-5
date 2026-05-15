@@ -5,7 +5,7 @@
 ===================================================
 
 Baixo e extraia a pasta zipada
-Abra a pasta "Versão teste" no Visual Studio Code
+Abra a pasta "Versão FInal" no Visual Studio Code
 No terminal do VS code, abra um Command Prompt.
 
 intale vite:
