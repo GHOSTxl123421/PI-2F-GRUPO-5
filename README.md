@@ -8,8 +8,8 @@ Baixo e extraia a pasta zipada
 Abra a pasta "Versão FInal" no Visual Studio Code
 No terminal do VS code, abra um Command Prompt.
 
-intale vite:
-  npm intall vite@latest
+instale vite:
+  npm install vite@latest
 
 espere o download completar, e execute o arquivo
 de JavaScript chamado "server.js":
