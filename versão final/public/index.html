@@ -6,29 +6,26 @@
     <title>Zenera - Biodigestor Inteligente</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="./imagens/logo.png">
 </head>
 <body>
 
     <div class="overlay" id="overlay"></div>
 
     <header id="main-header">
-        <a href="#">
-            <img src="./imagens/zenera_logo.png" alt="logo zenera">
-        </a>
+        <a href="#" class="logo"><i class="fa-solid fa-leaf"></i> ZENERA</a>
         <nav>
             <ul>
-                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#biodigestor">Biodigestor</a></li>
                 <li><a href="#solucoes">Benefícios</a></li>
                 <li><a href="#produtos">Produtos</a></li>
                 <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#loja">Loja</a></li>
             </ul>
         </nav>
         <div style="display: flex; align-items: center; gap: 20px;">
             <div class="user-menu">
-                <a href="#" id="login-link" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <a href="#" id="login-link" style="color: rgb(15, 70, 24); text-decoration: none; display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-user"></i>
                     <span>Entrar</span>
                 </a>
@@ -46,7 +43,7 @@
             <i class="fa-solid fa-xmark" style="cursor:pointer; font-size: 1.5rem;" onclick="toggleCart()"></i>
         </div>
         <div id="cart-items">
-            <div class="cart-empty">🛒 Seu carrinho está vazio</div>
+            <div class="cart-empty">Seu carrinho está vazio</div>
         </div>
         <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
         <button class="btn btn-green" style="width: 100%;" onclick="finalizarPedido()">
@@ -68,49 +65,44 @@
         </section>
 
         <!-- DASHBOARD DE SENSORES (APENAS 3) -->
-<section id="dashboard">
+<section id="biodigestor">
     <div class="section-title reveal">
-        <span>MONITORAMENTO EM TEMPO REAL</span>
-        <h2>Seu Biodigestor Inteligente</h2>
-        <p>Dados atualizados automaticamente via Arduino</p>
+        <span>SOBRE</span>
+        <h2>BIODIGESTOR</h2>
     </div>
     
-    <div class="dashboard-grid">
-        <!-- Temperatura -->
-        <div class="sensor-card">
-            <div class="sensor-icon">🌡️</div>
-            <h3>Temperatura</h3>
-            <div class="sensor-value" id="temp-value">--</div>
-            <div class="sensor-unit">°C</div>
-            <div class="sensor-status" id="temp-status"></div>
-        </div>
+    <div class="biodigestor-grid">
+
+        <div class="oque-card">
+           <div><h1>O que é um biodisgestor?</h1></div>
+            <br>
+            <br>
+            <h3>Um biodigestor é um sistema fechado que decompõe matéria orgânica por meio de bactérias anaeróbicas,
+             gerando biogás e biofertilizante.
+            </h3>       
+            <br>
+            <br>
+            <br>
+            <h3>Ele substitui fossas convencionais (tratando esgoto residencial)
+             e converte resíduos rurais ou industriais em energia renovável e adubo de alta qualidade.</h3>   
+     </div>
         
-        <!-- Pressão -->
-        <div class="sensor-card">
-            <div class="sensor-icon">⏲️</div>
-            <h3>Pressão</h3>
-            <div class="sensor-value" id="press-value">--</div>
-            <div class="sensor-unit">bar</div>
-            <div class="sensor-status" id="press-status"></div>
-        </div>
-        
-        <!-- Densidade -->
-        <div class="sensor-card">
-            <div class="sensor-icon">⚖️</div>
-            <h3>Densidade do Biogás</h3>
-            <div class="sensor-value" id="densidade-value">--</div>
-            <div class="sensor-unit">kg/m³</div>
-            <div class="sensor-status" id="densidade-status"></div>
-        </div>
-        
-        <!-- Última Leitura -->
-        <div class="sensor-card">
-            <div class="sensor-icon">🕒</div>
-            <h3>Última Leitura</h3>
-            <div class="sensor-value" id="update-time" style="font-size: 0.9rem;">--</div>
-            <button id="simular-btn" class="btn-small">
-                <i class="fa-solid fa-microchip"></i> Simular Dados
-            </button>
+ 
+        <div class="como-card">
+            <div><h1>Como funciona?</h1></div>
+            <br>
+            <h3>Digestão</h3>
+            <p>Resíduos orgânicos (como esterco, restos de comida ou esgoto) são inseridos no tanque hermético.</p>
+            <br>
+            <h3>Decomposição</h3>
+            <p>Na ausência de oxigênio, bactérias quebram a matéria orgânica em um processo que dura semanas.</p>
+            <br>
+            <h3>Subprodutos:</h3>
+            <br>
+            <h4>Biogás:</h4>
+            <p>Rico em metano, pode ser usado para cozinhar, aquecer ou gerar eletricidade.</p>
+            <h4>Biofertilizante (Digestato):</h4>
+            <p>Um líquido rico em nutrientes, ideal para uso na agricultura</p>
         </div>
     </div>
 </section>
@@ -147,32 +139,23 @@
         <section id="produtos">
             <div class="section-title reveal">
                 <span>SISTEMA PRINCIPAL</span>
-                <h2>Biodigestor Zenera 2.0</h2>
+                <h2>Biodigestor Zenera</h2>
             </div>
             <div class="product-box reveal">
                 <div class="product-badge">Mais Vendido</div>
-                <h3>O Biodigestor Inteligente</h3>
-                <p>O design mais premiado do mercado, agora disponível para sua residência com monitoramento IoT.</p>
-                <div class="product-price">R$ 4.990,00</div>
+                <h3>O Biodigestor</h3>
+                <p>Biodigestor feito para quem quer qualidade pagando pouco.</p>
+                <div class="product-price">R$ barato</div>
                 <div class="specs-list">
-                    <div><strong>📦 Capacidade:</strong> 2kg de resíduos/dia</div>
-                    <div><strong>🔥 Produção:</strong> 700L biogás/dia</div>
-                    <div><strong>📡 Monitoramento:</strong> Web</div>
-                    <div><strong>♻️ Economia:</strong> ~R$150/mês</div>
+                    <div><strong> Capacidade:</strong> 2kg de resíduos/dia</div>
+                    <div><strong> Produção:</strong> 700L biogás/dia</div>
+                    <div><strong> Monitoramento:</strong> APP</div>
+                    <div><strong> Economia:</strong> ~R$150/mês</div>
                 </div>
-                <button class="btn btn-green btn-large" onclick="addToCart('Biodigestor Zenera 2.0', 4990)">
+                <button class="btn btn-green btn-large" onclick="addToCart('Biodigestor Zenera 2.0', 300)">
                     <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                 </button>
             </div>
-        </section>
-
-        <section id="loja">
-            <div class="section-title reveal">
-                <span>ECOMMERCE</span>
-                <h2>Sensores e Acessórios</h2>
-                <p>Expanda seu sistema com nossos componentes</p>
-            </div>
-            <div class="produtos-grid" id="produtos-container"></div>
         </section>
 
         <section id="sobre">
