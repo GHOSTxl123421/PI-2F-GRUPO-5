@@ -93,6 +93,15 @@ header.scrolled .cart-trigger { color: var(--green-primary); }
     border-radius: 50%;
     font-weight: bold;
 }
+header.scrolled #login-link { color: var(--green-primary); }
+#login-link{
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition)
+}
 
 .hero {
     height: 100vh;
