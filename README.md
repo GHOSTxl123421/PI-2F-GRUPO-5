@@ -4,8 +4,8 @@
 
 ===================================================
 
-Baixo e extraia a pasta zipada
-Abra a pasta "Versão FInal" no Visual Studio Code
+Baixe e extraia a pasta zipada
+Abra a pasta "Versão Final" no Visual Studio Code
 No terminal do VS code, abra um Command Prompt.
 
 instale vite:
@@ -16,7 +16,7 @@ de JavaScript chamado "server.js":
   node server.js
 
 no terminal, vai ser disponibilizado um link
-localhost para colocar no navegador, Junto com
+localhost para colocar no navegador, junto com
 os emails de teste.
 
 ===================================================
