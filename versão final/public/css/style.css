@@ -144,6 +144,7 @@ section { padding: 100px 5%; }
     transition: var(--transition);
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
+    text-align: left;
 
 }
 .como-card {
@@ -155,6 +156,7 @@ section { padding: 100px 5%; }
     transition: var(--transition);
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
+    text-align: left;
 }
 
 .features {
