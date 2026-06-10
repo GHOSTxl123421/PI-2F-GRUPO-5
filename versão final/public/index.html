@@ -233,7 +233,7 @@
             cart.push({ name, price, id: Date.now() });
             updateCartUI();
             if (!cartDrawer.classList.contains('active')) toggleCart();
-            showNotification(`${name} adicionado ao carrinho!`);
+            
             salvarCarrinho();
         }
 
@@ -296,30 +296,6 @@
             
             localStorage.setItem('carrinhoZenera', JSON.stringify(cart));
             window.location.href = '/pagamento.html';
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#2d5a27' : '#ef4444'};
-                color: white;
-                padding: 12px 24px;
-                border-radius: 10px;
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            `;
-            notification.innerHTML = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
         }
 
         // ========== VERIFICAR USUÁRIO LOGADO ==========
