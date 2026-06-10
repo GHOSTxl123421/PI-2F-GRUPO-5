@@ -50,7 +50,8 @@ header {
 
 img {
     width: 210px;
-filter: invert(60%) sepia(91%) saturate(402%) hue-rotate(93deg) brightness(93%) contrast(85%);}
+filter: invert(60%) sepia(91%) saturate(430%) hue-rotate(72deg) brightness(41%) contrast(79.3%);
+}
 
 header.scrolled {
     background: rgba(255, 255, 255, 0.98);
