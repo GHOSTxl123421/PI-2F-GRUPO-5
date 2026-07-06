@@ -1,5 +1,4 @@
-============================================================================
-============================================================================
+
 
 SayWay Web Site e App:
 
@@ -7,8 +6,9 @@ instale e extraia o arquivo zip
 tenha o node instalado no PC e o PostgreSQL
 instale vite : install vite@latest
 
-============================================================================
-============================================================================
+
+
+
 
 Banco de dados Atual: 
 
@@ -149,6 +149,4 @@ VALUES (1, 2, 'Coca-Cola 500ml', 'Refrigerante gelado', 8.90, 100);
 
 INSERT INTO produtos (empresa_id, categoria_id, nome, descricao, preco, estoque) 
 VALUES (1, 3, 'Batata Frita', 'Batata crocante', 12.90, 60);
- 
-============================================================================
-============================================================================
+
