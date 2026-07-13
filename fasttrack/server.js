@@ -74,7 +74,7 @@ app.post('/api/auth/login', async (req, res) => {
         await pool.query('UPDATE usuarios SET ultimo_login = NOW() WHERE id = $1', [usuario.id]);
         const token = jwt.sign({ id: usuario.id, nome: usuario.nome, email: usuario.email, tipo: usuario.tipo }, JWT_SECRET, { expiresIn: '7d' });
         
-        res.json({ success: true, token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, tipo: usuario.tipo } });
+        res.json({ success: true, token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, tipo: usuario.tipo usuario.is_dev } });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Erro interno" });
