@@ -1,0 +1,8 @@
+adiciopnar ao sql
+
+conta dev
+ALTER TABLE usuarios ADD COLUMN is_dev BOOLEAN DEFAULT false;
+UPDATE usuarios SET is_dev = true WHERE email = 'dev@teste.com';
+
+marcar: is_dev = true
+confere se o usuario retornado no login já vem com is_dev: true
