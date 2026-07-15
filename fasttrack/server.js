@@ -239,7 +239,48 @@ app.put('/api/pedidos/:id/entregador', autenticar, async (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao aceitar pedido" });
     }
 });
+// ========== ROTAS DE MAPA/ROTA API ==========
+app.post('/api/rotas/calcular', autenticar, async (req, res) => {
+    const { origem, destino } = req.body; // { lat, lng } cada um
 
+    try {
+        const response = await fetch(
+            'https://api.openrouteservice.org/v2/directions/driving-car/geojson',
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': process.env.ORS_API_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    coordinates: [
+                        [origem.lng, origem.lat],
+                        [destino.lng, destino.lat]
+                    ]
+                })
+            }
+        );
+
+        if (!response.ok) {
+            const erro = await response.text();
+            console.error('Erro ORS:', erro);
+            return res.status(502).json({ success: false, message: "Erro ao calcular rota" });
+        }
+
+        const data = await response.json();
+        const feature = data.features[0];
+
+        res.json({
+            success: true,
+            geometria: feature.geometry, // pra desenhar no Leaflet
+            distancia_km: (feature.properties.summary.distance / 1000).toFixed(2),
+            duracao_min: (feature.properties.summary.duration / 60).toFixed(0)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Erro interno ao calcular rota" });
+    }
+});
 // ========== WEBSOCKET ==========
 io.on('connection', (socket) => {
     console.log('📡 Cliente conectado');
